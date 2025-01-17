@@ -1,0 +1,18 @@
+# Minimum CMake version
+cmake_minimum_required(VERSION 3.31.4)
+
+# Project details
+project(SpaceProjeckt
+    VERSION 1.0.0
+    LANGUAGES C CXX
+)
+
+# Set C++ Standard
+set(CMAKE_CXX_STANDARD          14)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+set(CMAKE_CXX_EXTENSIONS        OFF)
+
+# create variable
+set(SPACE_PROJECKT_GAME_TARGET_NAME SpaceProjecktGame)
+
+add_subdirectory(SpaceProjeckt)
