@@ -1,0 +1,41 @@
+add_executable(${SPACE_PROJECKT_GAME_TARGET_NAME}
+    ${CMAKE_CURRENT_SOURCE_DIR}/include/gameframework/GameApplication.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/gameframework/GameApplication.cpp
+
+)
+
+# Add the include directory
+target_include_directories(${SPACE_PROJECKT_GAME_TARGET_NAME} PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include)
+
+target_link_libraries(${SPACE_PROJECKT_GAME_TARGET_NAME} PUBLIC ${SPACE_PROJECKT_ENGINE_TARGET_NAME})
+
+
+function(CopyLibDirToTarget LIB_NAME TARGET_NAME)
+	add_custom_command(TARGET ${TARGET_NAME}
+	POST_BUILD
+	COMMAND
+	${CMAKE_COMMAND} -E copy_directory
+	$<TARGET_FILE_DIR:${LIB_NAME}>
+	$<TARGET_FILE_DIR:${TARGET_NAME}>
+	)
+endfunction()
+
+CopyLibDirToTarget(${SPACE_PROJECKT_ENGINE_TARGET_NAME} ${SPACE_PROJECKT_GAME_TARGET_NAME})
+
+set(RESOURCE_FOLDER_NAME "assets")
+set(RESOURCE_SRC_DIR "${CMAKE_CURRENT_SOURCE_DIR}/${RESOURCE_FOLDER_NAME}")
+
+add_custom_command(
+	TARGET ${SPACE_PROJECKT_GAME_TARGET_NAME}
+	POST_BUILD
+	COMMAND
+	${CMAKE_COMMAND} -E copy_directory
+	${RESOURCE_SRC_DIR}
+	$<TARGET_FILE_DIR:${SPACE_PROJECKT_GAME_TARGET_NAME}>/${RESOURCE_FOLDER_NAME}
+)
+
+configure_file(
+	"config.h.in"
+	"${CMAKE_CURRENT_SOURCE_DIR}/include/config.h" ESCAPE_QUOTES
+)
+
