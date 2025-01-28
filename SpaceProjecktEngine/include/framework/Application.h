@@ -31,6 +31,7 @@ namespace SPKT
 	public:
 		
 		sharedPtr<World> currentWorld;
+		sf::Vector2u GetWindowSize()const;
 	};
 
 	template<typename T>

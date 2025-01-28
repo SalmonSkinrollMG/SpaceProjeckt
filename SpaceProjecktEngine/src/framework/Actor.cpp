@@ -2,10 +2,11 @@
 #include "framework/Core.h"
 #include "framework/AssetManager.h"
 #include "framework/MathUtility.h"
+#include "framework/World.h"
 
 namespace SPKT {
 	Actor::Actor(World* owningWorld, const std::string& texturePath)
-		:mOwningWorld{ nullptr },
+		:mOwningWorld{ owningWorld },
 		mHasBeganPlay{ false },
 		mSprite{},
 		mTexture{}
@@ -102,6 +103,11 @@ namespace SPKT {
 	{
 		return RotationToVector(GetActorRotation() + 90.0f);
 	}
+	World* Actor::GetOwningWorld()
+	{
+		return mOwningWorld;
+	}
+
 	void Actor::CenterPivot()
 	{
 		sf::FloatRect bound = mSprite.getGlobalBounds();

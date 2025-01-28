@@ -94,4 +94,8 @@ namespace SPKT
 	{
 		currentWorld->Render(mWindow);
 	}
+	sf::Vector2u Application::GetWindowSize()const
+	{
+		return mWindow.getSize();
+	}
 }

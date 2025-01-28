@@ -14,7 +14,7 @@ namespace SPKT
 		void TickInternal(float DeltaTime);
 
 		void BeginPlay();
-		void Tick(float DeltaTime);
+		virtual void Tick(float DeltaTime);
 		
 		void SetTexture(const std::string& texturePath);
 
@@ -31,6 +31,8 @@ namespace SPKT
 
 		Vector2D GetActorForwardVector();
 		Vector2D GetActorRightVector();
+
+		World* GetOwningWorld();
 
 
 	private:

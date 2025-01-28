@@ -47,7 +47,7 @@ using Vector2D = sf::Vector2f;
 
 
 /*
-* Roatator1D - using std float for roatotor and for 2d game 1D rotator is more than fine
+* Rotator1D - using std float for rotator and for 2d game 1D rotator is more than fine
 */
 using Rotator1D = float;
 

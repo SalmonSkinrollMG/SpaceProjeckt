@@ -4,6 +4,7 @@
 namespace SPKT
 {
 	class Actor;
+	class Player;
 	class GameApplication : public Application
 	{
 	public:
@@ -11,6 +12,6 @@ namespace SPKT
 		void Tick(float Deltatime);
 
 		float totalTime = 0.0f;
-		weakPtr<Actor> ActorToDestory;
+		weakPtr<Player> ActorToDestory;
 	};
 }

@@ -4,12 +4,11 @@
 namespace SPKT
 {
 	World::World(Application* owningApplication)
-		:mOwningApplication{ nullptr },
+		:mOwningApplication{ owningApplication },
 		mBegunPlay{false},
 		mActors{},
 		mPendingActors{}
 	{
-
 	}
 
 	void World::BeginPlayInternal()
@@ -58,6 +57,11 @@ namespace SPKT
 	World::~World()
 	{
 
+	}
+
+	sf::Vector2u World::GetWindowSize() const
+	{
+		return mOwningApplication->GetWindowSize();
 	}
 
 	void World::BeginPlay()

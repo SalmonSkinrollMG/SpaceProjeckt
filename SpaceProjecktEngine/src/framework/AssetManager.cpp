@@ -22,7 +22,7 @@ namespace SPKT
 		}
 
 		sharedPtr<sf::Texture> newTexture{ new sf::Texture };
-		if (newTexture->loadFromFile(Path))
+		if (newTexture->loadFromFile( mRootDirectory + Path))
 		{
 			mLoadedTextureMap.insert({ Path, newTexture });
 			return newTexture;
@@ -47,8 +47,14 @@ namespace SPKT
 		}
 	}
 
+	void AssetManager::SetRootDirectory(std::string& path)
+	{
+		mRootDirectory = path;
+	}
+
 
 	AssetManager::AssetManager()
+		:mRootDirectory{}
 	{
 
 	}

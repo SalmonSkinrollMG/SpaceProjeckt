@@ -12,6 +12,7 @@ namespace SPKT {
 		static AssetManager& Get();
 		sharedPtr<sf::Texture> LoadTexture(const std::string& Path);
 		void CleanAssets();
+		void SetRootDirectory(std::string& path);
 
 	protected:
 		AssetManager();
@@ -19,5 +20,6 @@ namespace SPKT {
 	private:
 		static uniquePtr<AssetManager> assetManager;
 		Dictonary <std::string, sharedPtr<sf::Texture>> mLoadedTextureMap;
+		std::string mRootDirectory;
 	};
 }

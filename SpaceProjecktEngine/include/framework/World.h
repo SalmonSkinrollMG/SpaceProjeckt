@@ -18,6 +18,8 @@ namespace SPKT
 		template<typename ActorType>
 		weakPtr<ActorType> SpawnActor();
 
+		sf::Vector2u GetWindowSize() const;
+
 
 	private:
 		Application* mOwningApplication;
