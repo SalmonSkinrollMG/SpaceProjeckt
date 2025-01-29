@@ -96,12 +96,12 @@ namespace SPKT {
 
 	Vector2D Actor::GetActorForwardVector()
 	{
-		return RotationToVector(GetActorRotation());
+		return RotationToVector(GetActorRotation() - 90.0f); //converting forward vector toward Y+ axis
 	}
 
 	Vector2D Actor::GetActorRightVector()
 	{
-		return RotationToVector(GetActorRotation() + 90.0f);
+		return RotationToVector(GetActorRotation());
 	}
 	World* Actor::GetOwningWorld()
 	{

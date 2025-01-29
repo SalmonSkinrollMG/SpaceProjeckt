@@ -18,6 +18,8 @@ namespace SPKT
 			return mVelocity;
 		};
 
+		virtual void Shoot() = 0;
+
 	private:
 		Vector2D mVelocity;
 	};

@@ -15,8 +15,8 @@ namespace SPKT
 
 		virtual ~World();
 
-		template<typename ActorType>
-		weakPtr<ActorType> SpawnActor();
+		template<typename ActorType , typename... Args>
+		weakPtr<ActorType> SpawnActor(Args... args);
 
 		sf::Vector2u GetWindowSize() const;
 
@@ -31,10 +31,10 @@ namespace SPKT
 		List<sharedPtr<Actor>> mPendingActors;
 	};
 
-	template<typename ActorType>
-	weakPtr<ActorType> World::SpawnActor()
+	template<typename ActorType, typename... Args>
+	weakPtr<ActorType> World::SpawnActor(Args... args)
 	{
-		sharedPtr<ActorType> newActor{ new ActorType{this} };
+		sharedPtr<ActorType> newActor{ new ActorType{this , args...} };
 		mPendingActors.push_back(newActor);
 		return newActor;
 	}
