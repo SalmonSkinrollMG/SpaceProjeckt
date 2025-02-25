@@ -1,10 +1,12 @@
 #pragma once
 #include <functional>
 #include "framework/Core.h"
-#include "framework/Object.h"
+
 
 namespace SPKT
 {
+	class Object;
+
 	template <typename... Args>
 	class Delegate
 	{
