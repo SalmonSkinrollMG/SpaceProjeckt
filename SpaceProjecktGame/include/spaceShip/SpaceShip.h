@@ -2,6 +2,7 @@
 #include "framework/Actor.h"
 #include "framework/World.h"
 #include "framework/Core.h"
+#include "gameplay/HealthComponent.h"
 
 namespace SPKT
 {
@@ -18,9 +19,14 @@ namespace SPKT
 			return mVelocity;
 		};
 
-		virtual void Shoot() = 0;
+		virtual void Shoot();
+
+		virtual void BeginPlay() override;
+
+		void OnHealthChanged(float amt, float health, float maxHealth);
 
 	private:
 		Vector2D mVelocity;
+		HealthComponent mHealthComponent;
 	};
 }

@@ -6,6 +6,7 @@
 #include "framework/World.h"
 #include "framework/Core.h"
 #include "framework/AssetManager.h"
+#include "framework/PhysicsSystem.h"
 
 namespace SPKT
 {
@@ -68,14 +69,20 @@ namespace SPKT
 	void Application::TickInternal(float DeltaTime)
 	{
 		Tick(DeltaTime);
+
+
 		if (currentWorld)
 		{
 			currentWorld->TickInternal(DeltaTime);
 		}
+
+		PhysicsSystem::Get().Step(DeltaTime);
+
 		if (mAssetCleanerClock.getElapsedTime().asSeconds() >= mCleanInterval)
 		{
 			mAssetCleanerClock.restart();
 			AssetManager::Get().CleanAssets();
+			currentWorld->RunCleanCycle();
 		}
 	}
 	void Application::RenderInternal()

@@ -9,10 +9,21 @@ namespace SPKT
 		,mBulletSpeed{bulletSpeed}
 	{
 	}
+
 	void Bullet::Tick(float deltaTime)
 	{
 		Actor::Tick(deltaTime);
 		Move(deltaTime);
+		if (CheckIfActorOutOfBound())
+		{
+			Destroy();
+		}
+	}
+
+	void Bullet::BeginPlay()
+	{
+		Actor::BeginPlay();
+		SetPhysicsEnabled(true);
 	}
 
 	void Bullet::Move(float deltaTime)

@@ -17,9 +17,9 @@ namespace SPKT
 		float GetBulletSpeed() { return mBulletSpeed; }
 
 		virtual void Tick(float deltaTime)override;
+		virtual void BeginPlay() override;
 
 		void Move(float deltaTime);
-
 
 	private:
 		Actor* mOwner;

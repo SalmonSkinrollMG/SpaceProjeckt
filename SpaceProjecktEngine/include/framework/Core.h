@@ -4,6 +4,7 @@
 #include <memory>
 #include <map>
 #include <unordered_map>
+#include <unordered_set>
 #include "SFML/Graphics.hpp"
 
 namespace SPKT 
@@ -22,7 +23,7 @@ template<typename T>
 using weakPtr = std::weak_ptr<T>;
 
 /*
-* List - Standard Vector
+* List - Standard Vector. Will store copies .  Has O(n) time complexit in search/find
 */
 template<typename T>
 using List = std::vector<T>;
@@ -39,10 +40,16 @@ using Map = std::map<keyType, valueType, predicate>;
 template<typename keyType, typename valueType, typename hasher = std::hash<keyType>>
 using Dictonary = std::unordered_map<keyType, valueType, hasher>;
 
+/*
+* Set - Unordered set stores unique values rather storing copies like vector . Has O(1) time complexit in search/find
+*/
+template<typename T>
+using Set = std::unordered_set<T>;
 
 /*
 * Vector2D - using SFML library template sf::vector<float,float>
 */
+
 using Vector2D = sf::Vector2f;
 
 

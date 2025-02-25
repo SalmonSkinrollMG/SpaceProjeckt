@@ -8,15 +8,17 @@ namespace SPKT {
 		:SpaceShip(owningWorld , path),
 		mInputVector{},
 		mSpeed{200.0f},
-		mBulletShooter{ new BulletShooter{this , 0.3f}}
+		mBulletShooter{ new BulletShooter{this , 0.1f}}
 	{
 	}
+
 	void Player::Tick(float deltaTime)
 	{
 		SpaceShip::Tick(deltaTime);
 		HandleInput();
 		ConsumeInput(deltaTime);
 	}
+
 	void Player::Shoot()
 	{
 		if (mBulletShooter)
@@ -24,6 +26,7 @@ namespace SPKT {
 			mBulletShooter->Shoot();
 		}
 	}
+
 	void Player::HandleInput()
 	{
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::W))
@@ -50,11 +53,13 @@ namespace SPKT {
 			Shoot();
 		}
 	}
+
 	void Player::ConsumeInput(float deltaTime)
 	{
 		SetVelocity(mInputVector * mSpeed);
 		mInputVector.x = mInputVector.y = 0;
 	}
+
 	void Player::ClampPlayerInWindow()
 	{
 		sf::Vector2u windowSize = GetOwningWorld()->GetWindowSize();
@@ -77,4 +82,5 @@ namespace SPKT {
 			mInputVector.y = 0.0f;
 		}
 	}
+
 }

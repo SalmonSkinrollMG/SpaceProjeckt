@@ -1,6 +1,7 @@
 #pragma once
 #include "framework/Core.h"
 #include "framework/Object.h"
+#include "box2d/b2_body.h"
 
 namespace SPKT
 {
@@ -13,7 +14,7 @@ namespace SPKT
 		void BeginPlayInternal();
 		void TickInternal(float DeltaTime);
 
-		void BeginPlay();
+		virtual void BeginPlay();
 		virtual void Tick(float DeltaTime);
 		
 		void SetTexture(const std::string& texturePath);
@@ -33,15 +34,34 @@ namespace SPKT
 		Vector2D GetActorRightVector();
 
 		World* GetOwningWorld();
+		
+		sf::FloatRect GetActorGlobalBounds();
 
+		bool CheckIfActorOutOfBound();
+
+		void SetPhysicsEnabled(bool bEnabled);
+
+		void OnActorOverlap(Actor* other);
+
+		void OnActorEndOverlap(Actor* other);
+
+		virtual void Destroy() override;
 
 	private:
+
+		void InitializePhysics();
+		void DeinitializePhysics();
+
+		void UpdatePhysicsBodyTransform();
 
 		World* mOwningWorld;
 		bool mHasBeganPlay;
 
 		sf::Sprite mSprite;
 		sharedPtr<sf::Texture> mTexture;
+
+		b2Body* mPhysicsBody;
+		bool mPhysicsEnabled;
 
 		void CenterPivot();
 	};

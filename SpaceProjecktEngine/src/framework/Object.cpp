@@ -10,12 +10,19 @@ namespace SPKT
 
 	Object::~Object()
 	{
-		LOG("Destruction is called on object");
+		LOG("Object Destoryed");
 	}
 
 	void Object::Destroy()
 	{
 		mIsPendingDestroy = true;
-		LOG("Object marked for pending kill");
+	}
+	weakPtr<Object> Object::GetWeakRef()
+	{
+		return weak_from_this();
+	}
+	weakPtr<const Object> Object::GetWeakRef() const
+	{
+		return weak_from_this();
 	}
 }

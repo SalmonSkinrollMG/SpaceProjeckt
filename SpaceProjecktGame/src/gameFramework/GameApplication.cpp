@@ -19,17 +19,24 @@ namespace SPKT
 		weakPtr<World> newWorld = LoadWorld<World>();
 		ActorToDestory = newWorld.lock()->SpawnActor<Player>();
 		ActorToDestory.lock()->SetActorPosition(Vector2D(300, 490));
+
+		weakPtr<SpaceShip> spaceShip = newWorld.lock()->SpawnActor<SpaceShip>();
+		spaceShip.lock()->SetTexture("SpaceShooterRedux/PNG/playerShip1_blue.png");
+		spaceShip.lock()->SetActorPosition(Vector2D(100 , 100));
+
 	}
+
 	void GameApplication::Tick(float Deltatime)
 	{
 		totalTime += Deltatime;
 		if (totalTime >= 5.0f)
 		{
-			
+			if (!ActorToDestory.expired())
+			{
+			//	ActorToDestory.lock()->Destroy();
+			}
 		}
-		if (!ActorToDestory.expired())
-		{
-		}
+		
 	}
 }
 

@@ -3,13 +3,16 @@
 #include "framework/AssetManager.h"
 #include "framework/MathUtility.h"
 #include "framework/World.h"
+#include "framework/PhysicsSystem.h"
 
 namespace SPKT {
 	Actor::Actor(World* owningWorld, const std::string& texturePath)
 		:mOwningWorld{ owningWorld },
 		mHasBeganPlay{ false },
 		mSprite{},
-		mTexture{}
+		mTexture{},
+		mPhysicsBody{nullptr},
+		mPhysicsEnabled{false}
 	{
 		SetTexture(texturePath);
 	}
@@ -67,21 +70,23 @@ namespace SPKT {
 	void Actor::SetActorPosition(Vector2D& actorPosition)
 	{
 		mSprite.setPosition(actorPosition);
+		UpdatePhysicsBodyTransform();
 	}
 
 	void Actor::SetActorRotation(Rotator1D actorRotation)
 	{
 		mSprite.setRotation(actorRotation);
+		UpdatePhysicsBodyTransform();
 	}
 
 	void Actor::AddActorPositionOffset(Vector2D& actorOffset)
 	{
-		mSprite.setPosition(GetActorPosition() + actorOffset);
+		SetActorPosition(GetActorPosition() + actorOffset);
 	}
 
 	void Actor::AddActorRotationOffset(Rotator1D actorRotation)
 	{
-		mSprite.setRotation( GetActorRotation() + actorRotation);
+		SetActorRotation(GetActorRotation() + actorRotation);
 	}
 
 	Vector2D Actor::GetActorPosition()
@@ -106,6 +111,101 @@ namespace SPKT {
 	World* Actor::GetOwningWorld()
 	{
 		return mOwningWorld;
+	}
+
+	sf::FloatRect Actor::GetActorGlobalBounds()
+	{
+		return mSprite.getGlobalBounds();
+	}
+
+	bool Actor::CheckIfActorOutOfBound()
+	{
+		float windowWidth = GetOwningWorld()->GetWindowSize().x;
+		float windowHeight = GetOwningWorld()->GetWindowSize().y;
+
+
+		//width and height are the buffer for half size of the actor.
+		float width = GetActorGlobalBounds().width; 
+		float height = GetActorGlobalBounds().height;
+
+		Vector2D actorPosition = GetActorPosition();
+
+		if (actorPosition.x < -width) // less than zero and half size of the sprite in x axis 
+		{
+			return true;
+		}
+		if (actorPosition.x > windowWidth + width) //greater than zero and half size of the sprite in x axis
+		{
+			return true;
+		}
+		if (actorPosition.y < -height)//less than zero and half size of the sprite in y axis
+		{
+			return true;
+		}
+		if (actorPosition.y > windowWidth + height)//greater than zero and half size of the sprite in y axis
+		{
+			return true;
+		}
+		return false;
+	}
+
+	void Actor::SetPhysicsEnabled(bool bEnabled)
+	{
+		mPhysicsEnabled = bEnabled;
+
+		if (bEnabled)
+		{
+			InitializePhysics();
+		}
+		else
+		{
+			DeinitializePhysics();
+		}
+	}
+
+	void Actor::OnActorOverlap(Actor* other)
+	{
+		LOG("OVerlapped");
+	}
+
+	void Actor::OnActorEndOverlap(Actor* other)
+	{
+		LOG("End Overlapped");
+	}
+
+	void Actor::Destroy()
+	{
+		DeinitializePhysics();
+		Object::Destroy();
+	}
+
+	void Actor::InitializePhysics()
+	{
+		if (!mPhysicsBody)
+		{
+			mPhysicsBody = PhysicsSystem::Get().AddListener(this);
+		}
+	}
+
+	void Actor::DeinitializePhysics()
+	{
+		if (mPhysicsBody)
+		{
+			PhysicsSystem::Get().RemoveListener(mPhysicsBody);
+			mPhysicsBody = nullptr;
+		}
+	}
+
+	void Actor::UpdatePhysicsBodyTransform()
+	{
+		if (mPhysicsBody)
+		{
+			float physicsScale = PhysicsSystem::Get().GetPhysicsScale();
+			b2Vec2 position{ GetActorPosition().x * physicsScale , GetActorPosition().y * physicsScale };
+			float angle = DegreesToRadians(GetActorRotation());
+
+			mPhysicsBody->SetTransform(position, angle);
+		}
 	}
 
 	void Actor::CenterPivot()

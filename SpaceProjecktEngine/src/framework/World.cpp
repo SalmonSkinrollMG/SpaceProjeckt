@@ -31,16 +31,8 @@ namespace SPKT
 
 		for (auto iter = mActors.begin(); iter != mActors.end();)
 		{
-			
-			if (iter->get()->IsPendingDestroy())
-			{
-				iter = mActors.erase(iter);
-			}
-			else
-			{
-				iter->get()->TickInternal(DeltaTime);
-				++iter;
-			}
+			iter->get()->TickInternal(DeltaTime);
+			++iter;
 		}
 
 		Tick(DeltaTime);
@@ -62,6 +54,22 @@ namespace SPKT
 	sf::Vector2u World::GetWindowSize() const
 	{
 		return mOwningApplication->GetWindowSize();
+	}
+
+	void World::RunCleanCycle()
+	{
+		for (auto iter = mActors.begin(); iter != mActors.end();)
+		{
+
+			if (iter->get()->IsPendingDestroy())
+			{
+				iter = mActors.erase(iter);
+			}
+			else
+			{
+				++iter;
+			}
+		}
 	}
 
 	void World::BeginPlay()

@@ -14,11 +14,17 @@ add_library(SpaceProjecktEngine STATIC
 	${CMAKE_CURRENT_SOURCE_DIR}/include/framework/Object.h
     ${CMAKE_CURRENT_SOURCE_DIR}/src/framework/Object.cpp
 
+    ${CMAKE_CURRENT_SOURCE_DIR}/include/framework/PhysicsSystem.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/framework/PhysicsSystem.cpp
+
 	${CMAKE_CURRENT_SOURCE_DIR}/include/framework/AssetManager.h
     ${CMAKE_CURRENT_SOURCE_DIR}/src/framework/AssetManager.cpp
 
 	${CMAKE_CURRENT_SOURCE_DIR}/include/framework/MathUtility.h
     ${CMAKE_CURRENT_SOURCE_DIR}/src/framework/MathUtility.cpp
+
+    ${CMAKE_CURRENT_SOURCE_DIR}/include/framework/Delegate.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/framework/Delegate.cpp
 
 	${CMAKE_CURRENT_SOURCE_DIR}/include/EntryPoint.h
     ${CMAKE_CURRENT_SOURCE_DIR}/src/EntryPoint.cpp
@@ -27,11 +33,37 @@ add_library(SpaceProjecktEngine STATIC
 # Add the include directory
 target_include_directories(SpaceProjecktEngine PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include)
 
+include(FetchContent)
+set(SFML_LIB_NAME SFML)
+
+FetchContent_Declare(
+    ${SFML_LIB_NAME}
+    GIT_REPOSITORY https://github.com/SFML/SFML
+    GIT_TAG 2.5.1
+    GIT_SHALLOW FALSE
+)
+
+FetchContent_MakeAvailable(${SFML_LIB_NAME})
 
 target_link_libraries(${SPACE_PROJECKT_ENGINE_TARGET_NAME} PUBLIC sfml-graphics)
 target_link_libraries(${SPACE_PROJECKT_ENGINE_TARGET_NAME} PUBLIC sfml-window)
 target_link_libraries(${SPACE_PROJECKT_ENGINE_TARGET_NAME} PUBLIC sfml-system)
 target_link_libraries(${SPACE_PROJECKT_ENGINE_TARGET_NAME} PUBLIC sfml-audio)
+
+
+include(FetchContent)
+set(BOX2D_LIB_NAME BOX2D)
+
+FetchContent_Declare(
+    ${BOX2D_LIB_NAME}
+    GIT_REPOSITORY https://github.com/erincatto/box2d
+    GIT_TAG v2.4.1
+    GIT_SHALLOW FALSE
+)
+
+FetchContent_MakeAvailable(${BOX2D_LIB_NAME})
+
+target_link_libraries(${SPACE_PROJECKT_ENGINE_TARGET_NAME} PUBLIC box2d)
 
 
 function(CopyLibToTarget LIB_NAME TARGET_NAME)
@@ -48,3 +80,5 @@ CopyLibToTarget(sfml-graphics ${SPACE_PROJECKT_ENGINE_TARGET_NAME})
 CopyLibToTarget(sfml-window ${SPACE_PROJECKT_ENGINE_TARGET_NAME})
 CopyLibToTarget(sfml-system ${SPACE_PROJECKT_ENGINE_TARGET_NAME})
 CopyLibToTarget(sfml-audio ${SPACE_PROJECKT_ENGINE_TARGET_NAME})
+
+CopyLibToTarget(box2d ${SPACE_PROJECKT_ENGINE_TARGET_NAME})

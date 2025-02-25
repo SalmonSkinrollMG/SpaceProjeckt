@@ -20,6 +20,7 @@ namespace SPKT
 
 		sf::Vector2u GetWindowSize() const;
 
+		void RunCleanCycle();
 
 	private:
 		Application* mOwningApplication;
