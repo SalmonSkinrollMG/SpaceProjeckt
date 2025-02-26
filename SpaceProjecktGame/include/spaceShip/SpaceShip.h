@@ -26,6 +26,7 @@ namespace SPKT
 
 		void Blink();
 		void UpdateBlink(float deltaTime);
+		void Blow();
 
 		
 

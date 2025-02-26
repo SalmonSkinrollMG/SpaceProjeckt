@@ -1,5 +1,6 @@
 #pragma once
 #include "framework/MathUtility.h"
+#include <random>
 
 namespace SPKT
 {
@@ -27,6 +28,27 @@ namespace SPKT
 		if (alpha > 1) alpha = 1;
 
 		return a + (b - a) * alpha;
+	}
+
+	float RandomRange(float min, float max)
+	{
+		std::random_device rd;
+		std::mt19937 gen(rd());
+
+		std::uniform_real_distribution<float> distribution{ min , max };
+
+		return distribution(gen);
+	}
+
+	Vector2D RandomUnitVector()
+	{
+		float RandX = RandomRange(-1, 1);
+		float RandY = RandomRange(-1 ,1);
+		Vector2D RandomVector{ RandX , RandY };
+
+		Normalize(RandomVector);
+
+		return RandomVector;
 	}
 
 	sf::Color LerpColor(const sf::Color& a, const sf::Color& b, float alpha)

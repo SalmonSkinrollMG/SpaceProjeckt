@@ -1,5 +1,6 @@
 #include "spaceShip/SpaceShip.h"
 #include "framework/MathUtility.h"
+#include "VFX/Explosion.h"
 
 namespace SPKT {
 
@@ -64,6 +65,15 @@ namespace SPKT {
 		}
 	}
 
+	void SpaceShip::Blow()
+	{
+		Explosion* exp = new Explosion();
+		exp->SpawnExplosion(GetOwningWorld(), GetActorPosition());
+
+		Destroy();
+		delete exp;
+	}
+
 
 	void SpaceShip::OnHealthChanged(float amt, float health, float maxHealth)
 	{
@@ -77,7 +87,7 @@ namespace SPKT {
 
 	void SpaceShip::OnHealthEmpty()
 	{
-		Destroy(); 
+		Blow();
 	}
 
 }

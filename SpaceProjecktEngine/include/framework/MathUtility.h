@@ -12,6 +12,10 @@ namespace SPKT {
 
 		float LerpFloat(float a, float b, float alpha);
 
+		float RandomRange(float min, float max);
+
+		Vector2D RandomUnitVector();
+
 		sf::Color LerpColor(const sf::Color& a, const sf::Color& b, float alpha);
 
 		Vector2D LerpVector(const Vector2D& a, const Vector2D& b, float alpha);
