@@ -14,6 +14,8 @@ namespace SPKT
 		float GetMaxHealth() const { return mMaxHealth; }
 
 		Delegate<float, float, float > onHealthChanged;
+		Delegate<float, float, float > onDamageTaken;
+		Delegate<> onHealthEmpty;
 
 	private:
 

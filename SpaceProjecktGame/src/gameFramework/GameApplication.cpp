@@ -23,6 +23,7 @@ namespace SPKT
 		weakPtr<SpaceShip> spaceShip = newWorld.lock()->SpawnActor<SpaceShip>();
 		spaceShip.lock()->SetTexture("SpaceShooterRedux/PNG/playerShip1_blue.png");
 		spaceShip.lock()->SetActorPosition(Vector2D(100 , 100));
+		spaceShip.lock()->SetTeamId(2);
 
 	}
 

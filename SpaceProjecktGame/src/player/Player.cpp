@@ -8,8 +8,9 @@ namespace SPKT {
 		:SpaceShip(owningWorld , path),
 		mInputVector{},
 		mSpeed{200.0f},
-		mBulletShooter{ new BulletShooter{this , 0.1f}}
+		mBulletShooter{ new BulletShooter{this , 0.1f} }
 	{
+		SetTeamId(1);
 	}
 
 	void Player::Tick(float deltaTime)

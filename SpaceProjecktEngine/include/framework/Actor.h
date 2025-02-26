@@ -41,11 +41,24 @@ namespace SPKT
 
 		void SetPhysicsEnabled(bool bEnabled);
 
-		void OnActorOverlap(Actor* other);
+		virtual void OnActorOverlap(Actor* other);
 
-		void OnActorEndOverlap(Actor* other);
+		virtual void OnActorEndOverlap(Actor* other);
 
 		virtual void Destroy() override;
+
+		static uint8 GetNeutralTeamId() { return mNeutralTeamId; }
+
+		uint8 GetTeamId() const { return mTeamId; }
+
+		bool IsOtherHostile(Actor* other);
+
+		void SetTeamId(uint8 teamId) { mTeamId = teamId; }
+
+		virtual void ApplyDamage(float amt);
+
+		sf::Sprite& GetActorSprite() { return mSprite; }
+		const sf::Sprite& GetActorSprite() const { return mSprite; }
 
 	private:
 
@@ -64,6 +77,10 @@ namespace SPKT
 		bool mPhysicsEnabled;
 
 		void CenterPivot();
+
+		uint8 mTeamId;
+
+		static const uint8 mNeutralTeamId = 255;
 	};
 
 }

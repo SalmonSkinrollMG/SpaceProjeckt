@@ -1,11 +1,15 @@
 #include "spaceShip/SpaceShip.h"
+#include "framework/MathUtility.h"
 
 namespace SPKT {
 
 	SpaceShip::SpaceShip(World* owningWorld, const std::string& texturePath)
 		:Actor{ owningWorld, texturePath },
 		mVelocity{},
-		mHealthComponent{100.0f , 100.0f}
+		mHealthComponent{100.0f , 100.0f},
+		mBlinkTime{0.0f},
+		mBlinkDuration{0.5f},
+		mBlinkColor{sf::Color::Red}
 	{
 	}
 
@@ -13,6 +17,7 @@ namespace SPKT {
 	{
 		Actor::Tick(DeltaTime);
 		AddActorPositionOffset(GetVelocity() * DeltaTime);
+		UpdateBlink(DeltaTime);
 	}
 
 	void SpaceShip::SetVelocity(const Vector2D& newVelocity)
@@ -30,12 +35,49 @@ namespace SPKT {
 		Actor::BeginPlay();
 		SetPhysicsEnabled(true);
 		mHealthComponent.onHealthChanged.BindAction(GetWeakRef() , &SpaceShip::OnHealthChanged);
-		mHealthComponent.onHealthChanged.Broadcast(10.f , 44.f , 100.f);
+		mHealthComponent.onDamageTaken.BindAction(GetWeakRef(), &SpaceShip::OnDamageTaken);
+		mHealthComponent.onHealthEmpty.BindAction(GetWeakRef(), &SpaceShip::OnHealthEmpty);
 	}
+
+	void SpaceShip::ApplyDamage(float amt)
+	{
+		Actor::ApplyDamage(amt);
+		mHealthComponent.SetHealth(-amt);
+	}
+
+	void SpaceShip::Blink()
+	{
+		if (mBlinkTime == 0)
+		{
+			mBlinkTime = mBlinkDuration;
+		}
+	}
+
+	void SpaceShip::UpdateBlink(float deltaTime)
+	{
+		if (mBlinkTime > 0)
+		{
+			mBlinkTime -= deltaTime;
+			mBlinkTime = mBlinkTime > 0 ? mBlinkTime : 0; // clamping
+
+			GetActorSprite().setColor(LerpColor(sf::Color::White, mBlinkColor, mBlinkTime));
+		}
+	}
+
 
 	void SpaceShip::OnHealthChanged(float amt, float health, float maxHealth)
 	{
-		LOG("Health is changed %f and now the current is %f of the %f maxHealth" , amt , health , maxHealth);
+		LOG("Health is changed %f and now the current is %f of the %f maxHealth", amt, health, maxHealth);
+	}
+
+	void SpaceShip::OnDamageTaken(float amt, float health, float maxHealth)
+	{
+		Blink();
+	}
+
+	void SpaceShip::OnHealthEmpty()
+	{
+		Destroy(); 
 	}
 
 }

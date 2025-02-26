@@ -27,29 +27,21 @@ namespace SPKT
 		if (amt < 0)
 		{
 			TakenDamage(-amt);
-			if (amt <= 0)
+			if (mHealth <= 0)
 			{
 				HealthEmpty();
 			}
 		}
-		else
-		{
-			HealthRegen(amt);
-		}
-
-
+		onHealthChanged.Broadcast(amt , mHealth , mMaxHealth);
 	}
 
 	void HealthComponent::TakenDamage(float amt)
 	{
-		LOG("Took Damage");
+		onDamageTaken.Broadcast(amt, mHealth, mMaxHealth);
 	}
 
 	void HealthComponent::HealthEmpty()
 	{
-	}
-
-	void HealthComponent::HealthRegen(float amt)
-	{
+		onHealthEmpty.Broadcast();
 	}
 }

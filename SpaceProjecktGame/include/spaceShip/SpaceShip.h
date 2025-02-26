@@ -22,10 +22,23 @@ namespace SPKT
 		virtual void Shoot();
 
 		virtual void BeginPlay() override;
+		virtual void ApplyDamage(float amt) override;
 
-		void OnHealthChanged(float amt, float health, float maxHealth);
+		void Blink();
+		void UpdateBlink(float deltaTime);
+
+		
 
 	private:
+
+		virtual void OnHealthChanged(float amt, float health, float maxHealth);
+		virtual void OnDamageTaken(float amt, float health, float maxHealth);
+		virtual void OnHealthEmpty();
+
+		float mBlinkTime;
+		float mBlinkDuration;
+		sf::Color mBlinkColor;
+
 		Vector2D mVelocity;
 		HealthComponent mHealthComponent;
 	};

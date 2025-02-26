@@ -8,6 +8,7 @@ namespace SPKT
 		,mBulletDamage{bulletDamage}
 		,mBulletSpeed{bulletSpeed}
 	{
+		SetTeamId(owningActor->GetTeamId());
 	}
 
 	void Bullet::Tick(float deltaTime)
@@ -24,6 +25,16 @@ namespace SPKT
 	{
 		Actor::BeginPlay();
 		SetPhysicsEnabled(true);
+	}
+
+	void Bullet::OnActorOverlap(Actor* other)
+	{
+		Actor::OnActorOverlap(other);
+		if (IsOtherHostile(other))
+		{
+			other->ApplyDamage(GetDamage());
+			Destroy();
+		}
 	}
 
 	void Bullet::Move(float deltaTime)

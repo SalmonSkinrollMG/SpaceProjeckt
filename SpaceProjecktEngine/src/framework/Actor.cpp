@@ -12,7 +12,8 @@ namespace SPKT {
 		mSprite{},
 		mTexture{},
 		mPhysicsBody{nullptr},
-		mPhysicsEnabled{false}
+		mPhysicsEnabled{false},
+		mTeamId{GetNeutralTeamId()}
 	{
 		SetTexture(texturePath);
 	}
@@ -177,6 +178,20 @@ namespace SPKT {
 	{
 		DeinitializePhysics();
 		Object::Destroy();
+	}
+
+	bool Actor::IsOtherHostile(Actor* other)
+	{
+		if (GetTeamId() == GetNeutralTeamId() || other->GetTeamId() == GetNeutralTeamId())
+		{
+			return false;
+		}
+		return GetTeamId() != other->GetTeamId();
+	}
+
+	void Actor::ApplyDamage(float amt)
+	{
+		//////damage
 	}
 
 	void Actor::InitializePhysics()

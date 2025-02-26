@@ -58,6 +58,11 @@ using Vector2D = sf::Vector2f;
 */
 using Rotator1D = float;
 
+/*
+* uint8 - unsigned charater.
+*/
+using uint8 = unsigned char;
+
 //----------------------Macros-------------------
 
 /*

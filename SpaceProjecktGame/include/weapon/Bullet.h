@@ -16,8 +16,12 @@ namespace SPKT
 		float GetBulletDamage() { return mBulletDamage;}
 		float GetBulletSpeed() { return mBulletSpeed; }
 
+		float GetDamage() { return mBulletDamage; }
+
 		virtual void Tick(float deltaTime)override;
 		virtual void BeginPlay() override;
+
+		virtual void OnActorOverlap(Actor* other) override;
 
 		void Move(float deltaTime);
 

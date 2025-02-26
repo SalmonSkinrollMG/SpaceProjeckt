@@ -10,6 +10,12 @@ namespace SPKT {
 
 		float RadiansToDegrees(float radians);
 
+		float LerpFloat(float a, float b, float alpha);
+
+		sf::Color LerpColor(const sf::Color& a, const sf::Color& b, float alpha);
+
+		Vector2D LerpVector(const Vector2D& a, const Vector2D& b, float alpha);
+
 		template <typename T>
 		float GetVectorLength(const sf::Vector2<T>& vector)
 		{
