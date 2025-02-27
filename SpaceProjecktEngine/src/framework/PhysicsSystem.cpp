@@ -41,7 +41,6 @@ namespace SPKT
 
 	b2Body* PhysicsSystem::AddListener(Actor* Listner)
 	{
-		LOG("Added Listner");
 		if (Listner->IsPendingDestroy())
 		{
 			return nullptr;
@@ -121,7 +120,6 @@ namespace SPKT
 		for (auto listener : mPendingListners)
 		{
 			mPhysicsWorld.DestroyBody(listener);
-			LOG("Deleted Listner");
 		}
 		mPendingListners.clear();
 	}

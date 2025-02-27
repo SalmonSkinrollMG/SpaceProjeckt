@@ -119,8 +119,9 @@ namespace SPKT {
 		return mSprite.getGlobalBounds();
 	}
 
-	bool Actor::CheckIfActorOutOfBound()
+	bool Actor::CheckIfActorOutOfBound(float boundAllowance)
 	{
+		//bound allowance is the offset to allow the bound limit
 		float windowWidth = GetOwningWorld()->GetWindowSize().x;
 		float windowHeight = GetOwningWorld()->GetWindowSize().y;
 
@@ -131,19 +132,19 @@ namespace SPKT {
 
 		Vector2D actorPosition = GetActorPosition();
 
-		if (actorPosition.x < -width) // less than zero and half size of the sprite in x axis 
+		if (actorPosition.x < -width - boundAllowance) // less than zero and half size of the sprite in x axis 
 		{
 			return true;
 		}
-		if (actorPosition.x > windowWidth + width) //greater than zero and half size of the sprite in x axis
+		if (actorPosition.x > windowWidth + width + boundAllowance) //greater than zero and half size of the sprite in x axis
 		{
 			return true;
 		}
-		if (actorPosition.y < -height)//less than zero and half size of the sprite in y axis
+		if (actorPosition.y < -height - boundAllowance)//less than zero and half size of the sprite in y axis
 		{
 			return true;
 		}
-		if (actorPosition.y > windowWidth + height)//greater than zero and half size of the sprite in y axis
+		if (actorPosition.y > windowHeight + height + boundAllowance)//greater than zero and half size of the sprite in y axis
 		{
 			return true;
 		}
@@ -166,12 +167,12 @@ namespace SPKT {
 
 	void Actor::OnActorOverlap(Actor* other)
 	{
-		LOG("OVerlapped");
+	
 	}
 
 	void Actor::OnActorEndOverlap(Actor* other)
 	{
-		LOG("End Overlapped");
+		
 	}
 
 	void Actor::Destroy()

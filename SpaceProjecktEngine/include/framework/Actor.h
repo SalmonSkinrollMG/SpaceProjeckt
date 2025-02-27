@@ -37,7 +37,7 @@ namespace SPKT
 		
 		sf::FloatRect GetActorGlobalBounds();
 
-		bool CheckIfActorOutOfBound();
+		bool CheckIfActorOutOfBound(float boundAllowance);
 
 		void SetPhysicsEnabled(bool bEnabled);
 

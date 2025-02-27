@@ -15,7 +15,7 @@ namespace SPKT
 	{
 		Actor::Tick(deltaTime);
 		Move(deltaTime);
-		if (CheckIfActorOutOfBound())
+		if (CheckIfActorOutOfBound(0))
 		{
 			Destroy();
 		}

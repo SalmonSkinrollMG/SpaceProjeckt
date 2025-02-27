@@ -1,6 +1,7 @@
 #include "gameFramework/GameApplication.h"
 #include "framework/World.h"
 #include "framework/Actor.h"
+#include "Enemy/Vanguard.h"
 #include "player/Player.h"
 #include "framework/AssetManager.h"
 #include "config.h"
@@ -20,8 +21,7 @@ namespace SPKT
 		ActorToDestory = newWorld.lock()->SpawnActor<Player>();
 		ActorToDestory.lock()->SetActorPosition(Vector2D(300, 490));
 
-		weakPtr<SpaceShip> spaceShip = newWorld.lock()->SpawnActor<SpaceShip>();
-		spaceShip.lock()->SetTexture("SpaceShooterRedux/PNG/playerShip1_blue.png");
+		weakPtr<Vanguard> spaceShip = newWorld.lock()->SpawnActor<Vanguard>();
 		spaceShip.lock()->SetActorPosition(Vector2D(100 , 100));
 		spaceShip.lock()->SetTeamId(2);
 
