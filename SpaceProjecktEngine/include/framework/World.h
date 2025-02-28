@@ -5,7 +5,7 @@
 namespace SPKT
 {
 	class Application;
-	class World
+	class World : public Object
 	{
 	public:
 		World(Application* owningApplication);
@@ -25,8 +25,8 @@ namespace SPKT
 	private:
 		Application* mOwningApplication;
 		bool mBegunPlay;
-		void BeginPlay();
-		void Tick(float DeltaTime);
+		virtual void BeginPlay();
+		virtual void Tick(float DeltaTime);
 
 		List<sharedPtr<Actor>> mActors;
 		List<sharedPtr<Actor>> mPendingActors;

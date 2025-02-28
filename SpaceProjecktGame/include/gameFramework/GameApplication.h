@@ -3,15 +3,10 @@
 
 namespace SPKT
 {
-	class Actor;
-	class Player;
 	class GameApplication : public Application
 	{
 	public:
-		GameApplication::GameApplication();
-		void Tick(float Deltatime);
+		GameApplication();
 
-		float totalTime = 0.0f;
-		weakPtr<Player> ActorToDestory;
 	};
 }

@@ -7,6 +7,7 @@
 #include "framework/Core.h"
 #include "framework/AssetManager.h"
 #include "framework/PhysicsSystem.h"
+#include "framework/TimerManager.h"
 
 namespace SPKT
 {
@@ -75,6 +76,8 @@ namespace SPKT
 		{
 			currentWorld->TickInternal(DeltaTime);
 		}
+
+		TimerManager::Get().UpdateTimer(DeltaTime);
 
 		PhysicsSystem::Get().Step(DeltaTime);
 

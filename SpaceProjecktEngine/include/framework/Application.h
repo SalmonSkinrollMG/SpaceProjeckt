@@ -37,7 +37,7 @@ namespace SPKT
 	template<typename T>
 	inline weakPtr<T> Application::LoadWorld()
 	{
-		sharedPtr<T> newWorld{ new World(this) };
+		sharedPtr<T> newWorld{ new T(this) };
 		currentWorld = newWorld;
 		currentWorld->BeginPlayInternal();
 		return newWorld;
