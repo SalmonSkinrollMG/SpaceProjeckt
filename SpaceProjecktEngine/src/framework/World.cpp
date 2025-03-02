@@ -1,5 +1,6 @@
 #include "framework/Application.h"
 #include "framework/World.h"
+#include "GamePlay/GameStage.h"
 
 namespace SPKT
 {
@@ -7,7 +8,9 @@ namespace SPKT
 		:mOwningApplication{ owningApplication },
 		mBegunPlay{false},
 		mActors{},
-		mPendingActors{}
+		mPendingActors{},
+		mCurrentStageIndex{-1},
+		mGameStages{}
 	{
 	}
 
@@ -17,6 +20,8 @@ namespace SPKT
 		{
 			BeginPlay();
 			mBegunPlay = true;
+			InitGameStage();
+			NextGameStage();
 		}
 	}
 
@@ -33,6 +38,11 @@ namespace SPKT
 		{
 			iter->get()->TickInternal(DeltaTime);
 			++iter;
+		}
+
+		if (mCurrentStageIndex >= 0 && mCurrentStageIndex < mGameStages.size())
+		{
+			mGameStages[mCurrentStageIndex]->TickStage(DeltaTime);
 		}
 
 		Tick(DeltaTime);
@@ -70,6 +80,23 @@ namespace SPKT
 				++iter;
 			}
 		}
+
+		for (auto iter = mGameStages.begin(); iter != mGameStages.end();)
+		{
+			if (iter->get()->IsStageFinished())
+			{
+				iter = mGameStages.erase(iter);
+			}
+			else
+			{
+				++iter;
+			}
+		}
+	}
+
+	void World::AddStage(const sharedPtr<GameStage>& newStage)
+	{
+		mGameStages.push_back(newStage);
 	}
 
 	void World::BeginPlay()
@@ -80,5 +107,29 @@ namespace SPKT
 	void World::Tick(float DeltaTime)
 	{
 		//LOG("Running Tick in world with deltatime %f",DeltaTime);
+	}
+
+	void World::InitGameStage()
+	{
+
+	}
+
+	void World::AllGameStageFinished()
+	{
+
+	}
+
+	void World::NextGameStage()
+	{
+		++mCurrentStageIndex;
+		if (mCurrentStageIndex >= 0 && mCurrentStageIndex < mGameStages.size())
+		{
+			mGameStages[mCurrentStageIndex]->onStageFinished.BindAction(GetWeakRef(), &World::NextGameStage);
+			mGameStages[mCurrentStageIndex]->StartStage();
+		}
+		else
+		{
+			AllGameStageFinished();
+		}
 	}
 }

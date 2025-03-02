@@ -4,6 +4,7 @@
 
 namespace SPKT
 {
+	class GameStage;
 	class Application;
 	class World : public Object
 	{
@@ -22,6 +23,8 @@ namespace SPKT
 
 		void RunCleanCycle();
 
+		void AddStage(const sharedPtr<GameStage>& newStage);
+
 	private:
 		Application* mOwningApplication;
 		bool mBegunPlay;
@@ -30,6 +33,13 @@ namespace SPKT
 
 		List<sharedPtr<Actor>> mActors;
 		List<sharedPtr<Actor>> mPendingActors;
+
+		List<sharedPtr<GameStage>> mGameStages;
+		int mCurrentStageIndex;
+		virtual void InitGameStage();
+		virtual void AllGameStageFinished();
+		virtual void NextGameStage();
+
 	};
 
 	template<typename ActorType, typename... Args>

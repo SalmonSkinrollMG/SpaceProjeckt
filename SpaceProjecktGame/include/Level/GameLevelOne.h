@@ -11,7 +11,12 @@ namespace SPKT
 
 		void OnTimerFUNC();
 
+		
+
 	private:
+
+		virtual void InitGameStage() override;
+
 		virtual void BeginPlay() override;
 		virtual void Tick(float DeltaTime) override;
 		weakPtr<Player> mPlayer;

@@ -5,6 +5,7 @@
 #include "Enemy/Vanguard.h"
 #include "player/Player.h"
 #include "framework/TimerManager.h"
+#include "gameplay/GameStage.h"
 
 namespace SPKT
 {
@@ -23,6 +24,11 @@ namespace SPKT
 	{
 		LOG("Timer is called");
 		TimerManager::Get().ClearTimer(mTimerIndex);
+	}
+
+	void GameLevelOne::InitGameStage()
+	{
+		AddStage(sharedPtr<GameStage>(new GameStage(this)));
 	}
 
 	void GameLevelOne::BeginPlay()
