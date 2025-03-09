@@ -21,11 +21,12 @@ namespace SPKT {
 
 		bool IsStageFinished() { return mStageFinished; }
 
+		virtual void StageFinished();
+
 	private:
 
 		bool mStageFinished;
 		World* mWorld;
-		virtual void StageFinished();
 
 	};
 }

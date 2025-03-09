@@ -16,7 +16,6 @@ namespace SPKT
 
 	void GameStage::TickStage(float DeltaTime)
 	{
-		LOG("Ticking stage");
 	}
 
 	void GameStage::FinishStage()

@@ -6,6 +6,7 @@ namespace SPKT
 		:SpaceShip(owningWorld , texturePath),
 		mCollisionDamage{collisionDamage}
 	{
+		SetTeamId(2);
 	}
 
 	void EnemySpaceShip::Tick(float deltaTime)

@@ -9,10 +9,6 @@ namespace SPKT
 	public:
 		GameLevelOne(Application* owningApplication);
 
-		void OnTimerFUNC();
-
-		
-
 	private:
 
 		virtual void InitGameStage() override;
