@@ -8,7 +8,7 @@ namespace SPKT {
 		:SpaceShip(owningWorld , path),
 		mInputVector{},
 		mSpeed{200.0f},
-		mBulletShooter{ new BulletShooter{this , 0.1f} }
+		mBulletShooter{ new BulletShooter{this , 0.1f , Vector2D{50.0f , 0.0f} , 0.0f } }
 	{
 		SetTeamId(1);
 	}

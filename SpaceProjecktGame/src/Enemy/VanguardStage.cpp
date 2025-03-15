@@ -1,5 +1,6 @@
 #include "Enemy/VanguardStage.h"
 #include "framework/World.h"
+#include "Enemy/TwinBlade.h"
 #include "Enemy/Vanguard.h"
 
 
@@ -54,7 +55,7 @@ namespace SPKT
 
 	void VanguardStage::SpawnVanguard()
 	{
-		weakPtr<Vanguard> newVanguard = GetWorld()->SpawnActor<Vanguard>();
+		weakPtr<TwinBlade> newVanguard = GetWorld()->SpawnActor<TwinBlade>();
 		newVanguard.lock()->SetActorPosition(mSpawnLocation);
 		++mCurrentRowVanguardCount;
 		if (mCurrentRowVanguardCount == mVanguardPerRow)
