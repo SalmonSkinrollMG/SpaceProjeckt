@@ -13,7 +13,7 @@ namespace SPKT
 	{
 		SpaceShip::Tick(deltaTime);
 
-		if (CheckIfActorOutOfBound(GetActorGlobalBounds().width))
+		if (CheckIfActorOutOfBound(GetActorGlobalBounds().width * 2.0f))
 		{
 			Destroy();
 		}

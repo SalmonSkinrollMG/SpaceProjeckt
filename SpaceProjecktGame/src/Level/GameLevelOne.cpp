@@ -2,6 +2,7 @@
 #include "gameFramework/GameApplication.h"
 #include "framework/World.h"
 #include "GamePlay/WaitStage.h"
+#include "Enemy/HexagonStage.h"
 #include "Enemy/VanguardStage.h"
 #include "Enemy/TwinBladeStage.h"
 #include "player/Player.h"
@@ -18,6 +19,7 @@ namespace SPKT
 
 	void GameLevelOne::InitGameStage()
 	{
+		AddStage(sharedPtr<HexagonStage>(new HexagonStage(this)));
 		AddStage(sharedPtr<VanguardStage>(new VanguardStage(this)));
 		AddStage(sharedPtr<WaitStage>(new WaitStage(this)));
 		AddStage(sharedPtr<TwinBladeStage>(new TwinBladeStage(this)));
