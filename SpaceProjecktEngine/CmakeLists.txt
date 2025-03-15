@@ -35,6 +35,9 @@ add_library(SpaceProjecktEngine STATIC
     ${CMAKE_CURRENT_SOURCE_DIR}/include/GamePlay/GameStage.h
     ${CMAKE_CURRENT_SOURCE_DIR}/src/GamePlay/GameStage.cpp
 
+    ${CMAKE_CURRENT_SOURCE_DIR}/include/GamePlay/WaitStage.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/GamePlay/WaitStage.cpp
+
 	${CMAKE_CURRENT_SOURCE_DIR}/include/EntryPoint.h
     ${CMAKE_CURRENT_SOURCE_DIR}/src/EntryPoint.cpp
 )

@@ -1,12 +1,10 @@
 #include "Level/GameLevelOne.h"
 #include "gameFramework/GameApplication.h"
 #include "framework/World.h"
-#include "framework/Actor.h"
-#include "Enemy/Vanguard.h"
+#include "GamePlay/WaitStage.h"
 #include "Enemy/VanguardStage.h"
+#include "Enemy/TwinBladeStage.h"
 #include "player/Player.h"
-#include "framework/TimerManager.h"
-#include "gameplay/GameStage.h"
 
 namespace SPKT
 {
@@ -21,6 +19,8 @@ namespace SPKT
 	void GameLevelOne::InitGameStage()
 	{
 		AddStage(sharedPtr<VanguardStage>(new VanguardStage(this)));
+		AddStage(sharedPtr<WaitStage>(new WaitStage(this)));
+		AddStage(sharedPtr<TwinBladeStage>(new TwinBladeStage(this)));
 	}
 
 	void GameLevelOne::BeginPlay()

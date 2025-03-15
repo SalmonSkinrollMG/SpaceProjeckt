@@ -35,10 +35,13 @@ namespace SPKT
 		List<sharedPtr<Actor>> mPendingActors;
 
 		List<sharedPtr<GameStage>> mGameStages;
-		int mCurrentStageIndex;
+
+		List<sharedPtr<GameStage>>::iterator mCurrentStage;
+
 		virtual void InitGameStage();
 		virtual void AllGameStageFinished();
 		virtual void NextGameStage();
+		virtual void StartStages();
 
 	};
 
