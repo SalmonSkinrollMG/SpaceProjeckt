@@ -1,94 +1,49 @@
 #include "player/Player.h"
-#include "SFML/System.hpp"
-#include "framework/MathUtility.h"
-#include "weapon/BulletShooter.h"
-#include "weapon/ThreeWayShooter.h"
-#include "weapon/FrontalWiper.h"
+#include "framework/World.h"
+#include "player/PlayerSpaceShip.h"
 
-namespace SPKT {
-	Player::Player(World* owningWorld, const std::string& path)
-		:SpaceShip(owningWorld , path),
-		mInputVector{},
-		mSpeed{200.0f},
-		mPlayerWeapon{ new FrontalWiper{this , 0.1f , Vector2D{50.0f , 0.0f} } }
+namespace SPKT 
+{
+	Player::Player()
+		:mLifeCount{3},
+		mScore{0},
+		mCurrentSpaceShip{}
 	{
-		SetTeamId(1);
 	}
 
-	void Player::Tick(float deltaTime)
+	weakPtr<PlayerSpaceShip> Player::SpawnSpaceShip(World* owningWorld)
 	{
-		SpaceShip::Tick(deltaTime);
-		HandleInput();
-		ConsumeInput(deltaTime);
+		if (mLifeCount > 0)
+		{
+			--mLifeCount;
+			auto windowSize = owningWorld->GetWindowSize();
+			mCurrentSpaceShip = owningWorld->SpawnActor<PlayerSpaceShip>();
+			mCurrentSpaceShip.lock()->SetActorPosition(Vector2D(windowSize.x/2.0f , windowSize.y - 100.0f));
+			onLifeChanged.Broadcast(mLifeCount);
+			return mCurrentSpaceShip;
+		}
+		else
+		{
+			onLifeExhausted.Broadcast();
+		}
+		return weakPtr<PlayerSpaceShip>{};
 	}
 
-	void Player::Shoot()
+	void Player::AddLifeCount(unsigned int count)
 	{
-		if (mPlayerWeapon)
+		if (count > 0)
 		{
-			mPlayerWeapon->Shoot();
-		}
-	}
-
-	void Player::SetWeapon(uniquePtr<WeaponBase>&& newWeapon)
-	{
-		mPlayerWeapon = std::move(newWeapon);
- 	}
-
-	void Player::HandleInput()
-	{
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::W))
-		{
-			mInputVector.y = -1.0f;
-		}
-		else if (sf::Keyboard::isKeyPressed(sf::Keyboard::S))
-		{
-			mInputVector.y = 1.0f;
-		}
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::A))
-		{
-			mInputVector.x = -1.0f;
-		}
-		else if (sf::Keyboard::isKeyPressed(sf::Keyboard::D))
-		{
-			mInputVector.x = 1.0f;
-		}
-		ClampPlayerInWindow();
-		Normalize(mInputVector);
-
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
-		{
-			Shoot();
+			mLifeCount += count;
+			onLifeChanged.Broadcast(mLifeCount);
 		}
 	}
 
-	void Player::ConsumeInput(float deltaTime)
+	void Player::AddScore(unsigned int amt)
 	{
-		SetVelocity(mInputVector * mSpeed);
-		mInputVector.x = mInputVector.y = 0;
-	}
-
-	void Player::ClampPlayerInWindow()
-	{
-		sf::Vector2u windowSize = GetOwningWorld()->GetWindowSize();
-		Vector2D playerPosition = GetActorPosition();
-
-		if (playerPosition.x < 0.0f && mInputVector.x == -1)
+		if (amt > 0)
 		{
-			mInputVector.x = 0.0f;
-		}
-		if (playerPosition.x > windowSize.x && mInputVector.x == 1)
-		{
-			mInputVector.x = 0.0f;
-		}
-		if (playerPosition.y < 0.0f && mInputVector.y == -1)
-		{
-			mInputVector.y = 0.0f;
-		}
-		if (playerPosition.y > windowSize.y && mInputVector.y == 1)
-		{
-			mInputVector.y = 0.0f;
+			mScore = amt;
+			onScoreChanged.Broadcast(amt);
 		}
 	}
-
 }

@@ -3,6 +3,7 @@
 #include "framework/AssetManager.h"
 #include "framework/MathUtility.h"
 #include "framework/World.h"
+#include "framework/Delegate.h"
 #include "framework/PhysicsSystem.h"
 
 namespace SPKT {
@@ -178,6 +179,7 @@ namespace SPKT {
 	void Actor::Destroy()
 	{
 		DeinitializePhysics();
+		onActorDestroyed.Broadcast(this);
 		Object::Destroy();
 	}
 

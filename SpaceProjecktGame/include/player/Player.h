@@ -1,29 +1,33 @@
 #pragma once
-#include "spaceShip/SpaceShip.h"
-#include "framework/Core.h"
+#include "framework/Object.h"
+#include "framework/Delegate.h"
 
-namespace SPKT
-{
-	class WeaponBase;
-	class Player : public SpaceShip
+namespace SPKT {
+
+	class World;
+	class PlayerSpaceShip;
+	class Player : public Object
 	{
+
 	public:
-		Player(World* owningWorld , const std::string& path = "SpaceShooterRedux/PNG/playerShip1_blue.png");
+		Player();
+		weakPtr<PlayerSpaceShip> SpawnSpaceShip(World* owningWorld);
+		weakPtr<PlayerSpaceShip> GetCurrentSpaceShip() const { return mCurrentSpaceShip; }
 
-		virtual void Tick(float deltaTime)override;
+		void AddLifeCount(unsigned int count);
+		int GetLifeCount() const { return mLifeCount; }
 
-		virtual void Shoot()override;
+		void AddScore(unsigned int amt);
+		int GetScore() const { return mScore; }
 
-		void SetWeapon(uniquePtr<WeaponBase>&& newWeapon);
+		Delegate<int> onLifeChanged;
+		Delegate<int> onScoreChanged;
+		Delegate<> onLifeExhausted;
+
 
 	private:
-		void HandleInput();
-		void ConsumeInput(float deltaTime);
-		void ClampPlayerInWindow();
-
-		Vector2D mInputVector;
-		float mSpeed;
-
-		uniquePtr<WeaponBase> mPlayerWeapon;
+		weakPtr<PlayerSpaceShip> mCurrentSpaceShip;
+		unsigned int mLifeCount;
+		unsigned int mScore;
 	};
 }

@@ -15,6 +15,11 @@ namespace SPKT
 
 		Actor* GetOwner() const { return mOwner; }
 
+		int GetCurrentLevel() const { return mCurrentLevel; }
+		int GetMaxLevl() const { return mMaxLevl; }
+
+		virtual void IncrementLevel(int amt =1);
+
 	protected:
 		WeaponBase(Actor* owner);
 
@@ -22,6 +27,8 @@ namespace SPKT
 		Actor* mOwner;
 		virtual void ShootImpl() = 0;
 
+		int mCurrentLevel;
+		int mMaxLevl;
 	};
 
 }

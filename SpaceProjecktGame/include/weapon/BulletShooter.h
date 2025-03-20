@@ -12,6 +12,7 @@ namespace SPKT
 		virtual bool IsInCooldown()const override;
 		void SetBulletTexturePath(const std::string& texture) { mBulletTexturePath = texture; }
 
+		virtual void IncrementLevel(int amt)override;
 
 	private:
 		sf::Clock mShootingClock;

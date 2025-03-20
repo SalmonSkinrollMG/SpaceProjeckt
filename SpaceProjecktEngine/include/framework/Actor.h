@@ -2,6 +2,7 @@
 #include "framework/Core.h"
 #include "framework/Object.h"
 #include "box2d/b2_body.h"
+#include "framework/Delegate.h"
 
 namespace SPKT
 {
@@ -59,10 +60,9 @@ namespace SPKT
 		virtual void OnActorOverlap(Actor* other);
 		virtual void OnActorEndOverlap(Actor* other);
 
+		Delegate<Actor*> onActorDestroyed;
+
 	private:
-
-
-	
 
 		void InitializePhysics();
 		void DeinitializePhysics();

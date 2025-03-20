@@ -19,11 +19,17 @@ namespace SPKT
 
 	bool SPKT::BulletShooter::IsInCooldown() const
 	{
-		if (mShootingClock.getElapsedTime().asSeconds() > mShootingInterval)
+		if (mShootingClock.getElapsedTime().asSeconds() > mShootingInterval/GetCurrentLevel())
 		{
 			return false;
 		}
 		return true;
+	}
+
+	void BulletShooter::IncrementLevel(int amt)
+	{
+		WeaponBase::IncrementLevel(amt);
+		mShootingInterval /= GetCurrentLevel();
 	}
 
 	void BulletShooter::ShootImpl()

@@ -4,9 +4,10 @@
 
 namespace SPKT
 {
-	class Player;
+	class PlayerSpaceShip;
+	class Reward;
 	using RewardFactoryFunc = std::function<weakPtr<Reward>(World*)>;
-	using RewardFunc = std::function<void(Player*)>;
+	using RewardFunc = std::function<void(PlayerSpaceShip*)>;
 	class Reward : public Actor
 	{
 	public:
@@ -27,7 +28,7 @@ namespace SPKT
 
 	weakPtr<Reward> CreateReward(World* world , const std::string& texturePath , RewardFunc rewardFunc);
 
-	void RewardHelath(Player* player);
-	void RewardThreeWasyShooer(Player* player);
-	void RewardFrontalWiper(Player* player);
+	void RewardHelath(PlayerSpaceShip* player);
+	void RewardThreeWasyShooer(PlayerSpaceShip* player);
+	void RewardFrontalWiper(PlayerSpaceShip* player);
 }

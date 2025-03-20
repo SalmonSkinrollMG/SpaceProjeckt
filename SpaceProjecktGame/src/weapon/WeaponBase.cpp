@@ -10,8 +10,19 @@ namespace SPKT
 			ShootImpl();
 		}
 	}
+	void WeaponBase::IncrementLevel(int amt)
+	{
+		if (mCurrentLevel == mMaxLevl)
+		{
+			return;
+		}
+		++mCurrentLevel;
+	}
+
 	WeaponBase::WeaponBase(Actor* owner)
-		:mOwner{owner}
+		:mOwner{owner},
+		mCurrentLevel{1},
+		mMaxLevl{5}
 	{
 	}
 }

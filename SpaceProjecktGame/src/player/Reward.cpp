@@ -1,5 +1,5 @@
 #include "player/Reward.h"
-#include "player/Player.h"
+#include "player/PlayerSpaceShip.h"
 #include "weapon/ThreeWayShooter.h"
 #include "weapon/FrontalWiper.h"
 #include "framework/World.h"
@@ -22,16 +22,17 @@ namespace SPKT
 	void Reward::Tick(float deltaTime)
 	{
 		Actor::Tick(deltaTime);
-		AddActorPositionOffset({ 0.0f, mSpeed * deltaTime });
+		AddActorPositionOffset(Vector2D{ 0.0f, mSpeed * deltaTime });
 	}
 
 	void Reward::OnActorOverlap(Actor* otherActor)
 	{
 		//TODO : Find BetterWays to do this.
-		Player* playerSpaceShip = static_cast<Player*>(otherActor);
+		PlayerSpaceShip* playerSpaceShip = dynamic_cast<PlayerSpaceShip*>(otherActor);
 		if (playerSpaceShip != nullptr && !playerSpaceShip->IsPendingDestroy())
 		{
 			mRewardFunc(playerSpaceShip);
+			Destroy();
 		}
 	}
 
@@ -52,11 +53,11 @@ namespace SPKT
 
 	weakPtr<Reward> CreateReward(World* world, const std::string& texturePath, RewardFunc rewardFunc)
 	{
-		weakPtr<Reward> reward = world->SpawnActor<Reward>(texturePath , rewardFunc);
+		weakPtr<Reward> reward = world->SpawnActor<Reward>(texturePath, rewardFunc);
 		return reward;
 	}
 
-	void RewardHelath(Player* player)
+	void RewardHelath(PlayerSpaceShip* player)
 	{
 		static float rewardAmt = 10.0f;
 		if (player && !player->IsPendingDestroy())
@@ -65,19 +66,19 @@ namespace SPKT
 		}
 	}
 
-	void RewardThreeWasyShooer(Player* player)
+	void RewardThreeWasyShooer(PlayerSpaceShip* player)
 	{
 		if (player && !player->IsPendingDestroy())
 		{
-			player->SetWeapon(uniquePtr<WeaponBase>{new ThreeWayShooter{ player, 0.4f, Vector2D{50.0f,0.0f} }});
+			player->SetWeapon(uniquePtr<WeaponBase>{new ThreeWayShooter{ player, 0.2f, Vector2D{50.0f,10.0f} }});
 		}
 	}
 
-	void RewardFrontalWiper(Player* player)
+	void RewardFrontalWiper(PlayerSpaceShip* player)
 	{
 		if (player && !player->IsPendingDestroy())
 		{
-			player->SetWeapon(uniquePtr<WeaponBase>{new FrontalWiper{ player, 0.4f, Vector2D{50.0f,0.0f} }});
+			player->SetWeapon(uniquePtr<WeaponBase>{new FrontalWiper{ player, 0.4f, Vector2D{50.0f,10.0f} }});
 		}
 	}
 }

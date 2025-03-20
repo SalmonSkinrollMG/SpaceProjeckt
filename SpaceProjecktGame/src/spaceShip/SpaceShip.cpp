@@ -69,9 +69,13 @@ namespace SPKT {
 	{
 		Explosion* exp = new Explosion();
 		exp->SpawnExplosion(GetOwningWorld(), GetActorPosition());
-
+		AfterBlow();
 		Destroy();
 		delete exp;
+	}
+
+	void SpaceShip::AfterBlow()
+	{
 	}
 
 

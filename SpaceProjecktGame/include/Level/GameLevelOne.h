@@ -3,7 +3,7 @@
 #include "framework/TimerManager.h"
 namespace SPKT
 {
-	class Player;
+	class PlayerSpaceShip;
 	class GameLevelOne : public World
 	{
 	public:
@@ -15,7 +15,9 @@ namespace SPKT
 
 		virtual void BeginPlay() override;
 		virtual void Tick(float DeltaTime) override;
-		weakPtr<Player> mPlayer;
+		weakPtr<PlayerSpaceShip> mPlayerSpaceShip;
+		void PlayerSpaceShipDestroyed(Actor* destroyedSpaceShip);
 		TimerHandle mTimerIndex;
+		void GameOver();
 	};
 }
