@@ -41,10 +41,6 @@ namespace SPKT
 
 		void SetPhysicsEnabled(bool bEnabled);
 
-		virtual void OnActorOverlap(Actor* other);
-
-		virtual void OnActorEndOverlap(Actor* other);
-
 		virtual void Destroy() override;
 
 		static uint8 GetNeutralTeamId() { return mNeutralTeamId; }
@@ -60,7 +56,13 @@ namespace SPKT
 		sf::Sprite& GetActorSprite() { return mSprite; }
 		const sf::Sprite& GetActorSprite() const { return mSprite; }
 
+		virtual void OnActorOverlap(Actor* other);
+		virtual void OnActorEndOverlap(Actor* other);
+
 	private:
+
+
+	
 
 		void InitializePhysics();
 		void DeinitializePhysics();

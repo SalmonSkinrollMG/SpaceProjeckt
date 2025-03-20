@@ -5,13 +5,16 @@
 namespace SPKT
 {
 
-	BulletShooter::BulletShooter(Actor* owner, float shootingInterval, Vector2D& positonOffset, float rotationOffset)
+
+	BulletShooter::BulletShooter(Actor* owner, float shootingInterval, Vector2D& positonOffset, float rotationOffset, const std::string& bulletTexturePath)
 		:WeaponBase(owner)
 		, mShootingClock{}
-		, mShootingInterval{shootingInterval}
-		, mLocalPositionOffset{positonOffset}
-		, mLocalRotationOffset{rotationOffset}
+		, mShootingInterval{ shootingInterval }
+		, mLocalPositionOffset{ positonOffset }
+		, mLocalRotationOffset{ rotationOffset }
+
 	{
+		SetBulletTexturePath(bulletTexturePath);
 	}
 
 	bool SPKT::BulletShooter::IsInCooldown() const
@@ -31,7 +34,7 @@ namespace SPKT
 
 		mShootingClock.restart();
 
-		weakPtr<Bullet> newBullet = GetOwner()->GetOwningWorld()->SpawnActor<Bullet>(GetOwner(), "SpaceShooterRedux/PNG/Lasers/laserBlue07.png");
+		weakPtr<Bullet> newBullet = GetOwner()->GetOwningWorld()->SpawnActor<Bullet>(GetOwner(), mBulletTexturePath);
 		newBullet.lock()->SetActorPosition(GetOwner()->GetActorPosition() + ownerForward * mLocalPositionOffset.x + ownerRight * mLocalPositionOffset.y);
 		newBullet.lock()->SetActorRotation(GetOwner()->GetActorRotation() + mLocalRotationOffset);
 		

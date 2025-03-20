@@ -28,7 +28,7 @@ namespace SPKT
 		void UpdateBlink(float deltaTime);
 		void Blow();
 
-		
+		HealthComponent& GetHealthComponent() { return mHealthComponent; }
 
 	private:
 

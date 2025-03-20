@@ -2,13 +2,15 @@
 #include "SFML/System.hpp"
 #include "framework/MathUtility.h"
 #include "weapon/BulletShooter.h"
+#include "weapon/ThreeWayShooter.h"
+#include "weapon/FrontalWiper.h"
 
 namespace SPKT {
 	Player::Player(World* owningWorld, const std::string& path)
 		:SpaceShip(owningWorld , path),
 		mInputVector{},
 		mSpeed{200.0f},
-		mBulletShooter{ new BulletShooter{this , 0.1f , Vector2D{50.0f , 0.0f} , 0.0f } }
+		mPlayerWeapon{ new FrontalWiper{this , 0.1f , Vector2D{50.0f , 0.0f} } }
 	{
 		SetTeamId(1);
 	}
@@ -22,11 +24,16 @@ namespace SPKT {
 
 	void Player::Shoot()
 	{
-		if (mBulletShooter)
+		if (mPlayerWeapon)
 		{
-			mBulletShooter->Shoot();
+			mPlayerWeapon->Shoot();
 		}
 	}
+
+	void Player::SetWeapon(uniquePtr<WeaponBase>&& newWeapon)
+	{
+		mPlayerWeapon = std::move(newWeapon);
+ 	}
 
 	void Player::HandleInput()
 	{

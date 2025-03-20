@@ -4,7 +4,7 @@
 
 namespace SPKT
 {
-	class BulletShooter;
+	class WeaponBase;
 	class Player : public SpaceShip
 	{
 	public:
@@ -14,6 +14,8 @@ namespace SPKT
 
 		virtual void Shoot()override;
 
+		void SetWeapon(uniquePtr<WeaponBase>&& newWeapon);
+
 	private:
 		void HandleInput();
 		void ConsumeInput(float deltaTime);
@@ -22,6 +24,6 @@ namespace SPKT
 		Vector2D mInputVector;
 		float mSpeed;
 
-		uniquePtr<BulletShooter> mBulletShooter;
+		uniquePtr<WeaponBase> mPlayerWeapon;
 	};
 }
